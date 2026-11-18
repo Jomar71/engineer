@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f7f4">
+  <title>AI Engineer Tracker | Bitácora de entrenamiento</title>
+  <script>
+    (function () {
+      var guardado = null;
+      try { guardado = localStorage.getItem('ai-engineer-tema'); } catch (error) {}
+      var oscuro = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = guardado === 'dark' || guardado === 'light' ? guardado : (oscuro ? 'dark' : 'light');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Newsreader:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="masthead container">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">ae</span>
+      <div>
+        <h1 class="brand-title">AI Engineer Tracker</h1>
+        <p class="brand-sub">Tu bitácora de entrenamiento: 44 semanas, 11 meses y un proyecto real al final.</p>
+      </div>
+    </div>
+    <div class="masthead-actions">
+      <div class="masthead-meta" aria-hidden="true"><span class="status-dot"></span>Plan activo</div>
+      <div class="theme-switch" role="group" aria-label="Tema de color">
+        <button type="button" class="theme-option" data-theme="light" aria-pressed="true">Claro</button>
+        <button type="button" class="theme-option" data-theme="dark" aria-pressed="false">Oscuro</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="run-panel" aria-label="Resumen del plan">
+      <div class="run-panel-top">
+        <div class="run-pct-wrap">
+          <span id="progress-pct" class="run-pct">0%</span>
+          <span class="run-pct-label">del plan completado</span>
+        </div>
+        <p class="run-note">Cada bloque es una semana. Se enciende cuando la marcas como completada.</p>
+      </div>
+
+      <div id="progress-ribbon" class="ribbon" role="img" aria-label="Mapa de progreso del plan"></div>
+
+      <div class="ribbon-legend" aria-hidden="true">
+        <span class="legend-item"><i class="legend-dot t1"></i>Fundamentos</span>
+        <span class="legend-item"><i class="legend-dot t2"></i>Backend</span>
+        <span class="legend-item"><i class="legend-dot t3"></i>RAG y agentes</span>
+        <span class="legend-item"><i class="legend-dot t4"></i>Producción</span>
+      </div>
+
+      <div class="metric-strip" aria-live="polite">
+        <div class="metric"><span class="metric-label">Semanas</span><span id="weeks-done" class="metric-value">0 / 44</span></div>
+        <div class="metric"><span class="metric-label">Horas</span><span id="hours-total" class="metric-value">0 h</span></div>
+        <div class="metric"><span class="metric-label">Racha</span><span id="streak" class="metric-value">0</span></div>
+        <div class="metric metric-english"><span class="metric-label">Inglés</span><span id="english-weeks-done" class="metric-value">0 / 20</span></div>
+        <div class="metric metric-english"><span class="metric-label">Horas de inglés</span><span id="english-hours-total" class="metric-value">0 h</span></div>
+      </div>
+    </section>
+
+    <section class="controls" role="search" aria-label="Buscar y filtrar el plan">
+      <div class="controls-row">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+          <label class="sr-only" for="search-input">Buscar temas, recursos, notas o inglés</label>
+          <input id="search-input" type="search" placeholder="Buscar tema, recurso, nota, inglés…" autocomplete="off" spellcheck="false" aria-describedby="search-status">
+          <button type="button" id="search-clear" class="search-clear" aria-label="Limpiar búsqueda" hidden>×</button>
+        </div>
+        <span id="search-status" class="search-status" role="status" aria-live="polite">44 semanas</span>
+      </div>
+      <div class="filters">
+        <label>Trimestre:
+          <select id="filter-trimester">
+            <option value="all">Todos</option>
+            <option value="1">T1 (1–12)</option>
+            <option value="2">T2 (13–24)</option>
+            <option value="3">T3 (25–36)</option>
+            <option value="4">T4 (37–44)</option>
+          </select>
+        </label>
+        <label>Mes:
+          <select id="filter-month">
+            <option value="all">Todos</option>
+            <option value="1">Mes 1 (sem. 1–4)</option>
+            <option value="2">Mes 2 (sem. 5–8)</option>
+            <option value="3">Mes 3 (sem. 9–12)</option>
+            <option value="4">Mes 4 (sem. 13–16)</option>
+            <option value="5">Mes 5 (sem. 17–20)</option>
+            <option value="6">Mes 6 (sem. 21–24)</option>
+            <option value="7">Mes 7 (sem. 25–28)</option>
+            <option value="8">Mes 8 (sem. 29–32)</option>
+            <option value="9">Mes 9 (sem. 33–36)</option>
+            <option value="10">Mes 10 (sem. 37–40)</option>
+            <option value="11">Mes 11 (sem. 41–44)</option>
+          </select>
+        </label>
+        <label>Estado:
+          <select id="filter-status">
+            <option value="all">Todas</option>
+            <option value="done">Completadas</option>
+            <option value="pending">Pendientes</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section id="weeks-list" class="weeks-list"></section>
+  </main>
+
+  <footer class="footer container">
+    <p>Tu progreso se guarda en este navegador. Descarga una copia para no perderlo.</p>
+    <div class="footer-actions">
+      <button type="button" id="export-progress" class="backup-btn">Descargar copia</button>
+      <button type="button" id="import-progress" class="backup-btn">Restaurar copia</button>
+      <input type="file" id="import-file" accept=".json,application/json" hidden>
+      <span id="backup-status" class="backup-status" role="status" aria-live="polite"></span>
+    </div>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
