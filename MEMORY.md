@@ -6,10 +6,10 @@
 - Sin build, sin tests; verificación manual vía HTTP (no `file://`).
 - Responsive verificado sin overflow ni solapes en 320/360/375/414/768/1024/1440/1920 px.
 - Auditoría funcional completa vía HTTP + CDP: 59/59 comprobaciones (toggles, horas, notas, inglés, búsqueda, Escape, limpiar, 3 filtros, tema, persistencia) sin excepciones.
-- Rediseño académico aplicado: cabecera con monograma serif, cinta de 44 segmentos como índice discreto, semanas como índice reglado con `S##`, sin tarjetas ni píldoras; tono de ficha universitaria.
-- Selector de tema Claro/Oscuro en la cabecera; persiste en `ai-engineer-tema` y respeta `prefers-color-scheme` si no hay elección guardada.
+- Rediseño visual futurista-académico aplicado (Deep Space Blue + neón cian/violeta, Glassmorphism, red neuronal CSS pura, tipografía Space Grotesk + Inter + IBM Plex Mono) conservando el 100% de la funcionalidad, estructura, IDs, persistencia y breakpoints existentes.
+- Selector de tema Claro/Oscuro en la cabecera; persiste en `ai-engineer-tema` y arranca en modo oscuro (`dark`) si no hay elección guardada.
 - Copia de seguridad en el pie: "Descargar copia" / "Restaurar copia" (JSON con `estado` + `tema`). 19/19 comprobaciones de backup sin excepciones.
-- Barra de búsqueda/filtros fija al desplazarse (`position: sticky`) con acabado de instrumento: regla superior, divisor de filtros, etiquetas mono y separadores; 20/20 comprobaciones específicas sin excepciones.
+- Barra de búsqueda/filtros fija al desplazarse (`position: sticky`) con panel glassmorphism y borde cian sutil.
 
 ## Decisiones importantes
 - **Sin dependencias ni bundler**: se mantiene SPA de un solo `index.html` + `app.js` clásico + `styles.css`. Evita tooling innecesario.

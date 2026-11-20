@@ -681,7 +681,7 @@ function aplicarTema(tema, guardar) {
     boton.setAttribute("aria-pressed", String(boton.dataset.theme === elegido));
   });
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute("content", elegido === "dark" ? "#111820" : "#f7f7f4");
+  if (meta) meta.setAttribute("content", elegido === "dark" ? "#030712" : "#f4f7fb");
   if (guardar) {
     try {
       localStorage.setItem(TEMA_KEY, elegido);
@@ -779,6 +779,16 @@ function init() {
   document.getElementById("export-progress").addEventListener("click", exportarProgreso);
   document.getElementById("import-progress").addEventListener("click", () => document.getElementById("import-file").click());
   document.getElementById("import-file").addEventListener("change", importarProgreso);
+  document.querySelectorAll("[data-jump-trimester]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const select = document.getElementById("filter-trimester");
+      if (select) {
+        select.value = btn.dataset.jumpTrimester;
+        renderSemanas();
+      }
+      document.getElementById("pensum")?.scrollIntoView({ behavior: "smooth" });
+    });
+  });
 }
 
 document.addEventListener("DOMContentLoaded", init);
